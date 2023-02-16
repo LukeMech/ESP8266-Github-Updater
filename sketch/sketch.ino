@@ -119,7 +119,7 @@ void firmwareUpdate()  // Updater
   ESPhttpUpdate.setLedPin(LED_BUILTIN);
   t_httpUpdate_return ret = ESPhttpUpdate.update(client, updaterFirmwareUrl);  // Update firmware
   if (ret) {  // Error
-    return();
+    return;
   }
 }
 

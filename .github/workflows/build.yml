@@ -1,16 +1,19 @@
-name: Check by build
+name: Build firmware
 
 on:
+
+  # On sketch change 
   push:
     paths:
       - '**.ino'
+
+  # On workflow dispatch
   workflow_dispatch:
 
 
 jobs:
 
   # Compile code
-
   compile:
 
     runs-on: macos-latest
@@ -18,17 +21,14 @@ jobs:
     steps:
 
       # Clone repository
-
       - name: Clone repository
         uses: actions/checkout@main
 
       # Setup arduino CLI
-
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@master
 
       # Configure platform
-
       - name: Configure platform
         run: |
           arduino-cli config init 
@@ -39,21 +39,18 @@ jobs:
           arduino-cli lib install --git-url https://github.com/me-no-dev/ESPAsyncWebServer.git https://github.com/me-no-dev/ESPAsyncTCP.git
           
       # Compile
-
       - name: Compile sketch
         run: |
           arduino-cli compile -b "esp8266:esp8266:nodemcuv2" -e ./sketch
       
-      # Move file to better place
-
-      - name: Find compiled file
+      # Upload to repository
+      - name: Push changes to repo
         run: |
-          cp ./sketch/build/*.*.*/*.ino.bin ./firmware.bin
-          
-      # Upload to artifacts
-
-      - name: Upload to artifacts
-        uses: actions/upload-artifact@main
-        with:
-          name: firmware.bin
-          path: firmware.bin
+          mv 'sketch/build/*.*.*/*.ino.bin' 'updater/firmware.bin'
+          cp 'sketch/version.txt' 'updater/build-version.txt'
+          rm -rf 'sketch/build'
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add .
+          git commit -m "🏗️ Build version $(cat sketch/version.txt)"
+          git push
