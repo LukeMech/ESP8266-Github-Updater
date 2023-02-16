@@ -47,9 +47,10 @@ jobs:
       # Upload to repository
       - name: Push changes to repo
         run: |
-          cp './sketch/build/**/*.ino.bin' './updater/firmware.bin'
-          cp './sketch/version.txt' './updater/build-version.txt'
-          rm -rf './sketch/build'
+          ls ./sketch/build
+          cp ./sketch/build/**/*.ino.bin ./updater/firmware.bin
+          cp ./sketch/version.txt ./updater/build-version.txt
+          rm -rf ./sketch/build
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
           git add .
