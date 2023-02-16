@@ -41,12 +41,13 @@ jobs:
       # Compile
       - name: Compile sketch
         run: |
-          arduino-cli compile -b "esp8266:esp8266:nodemcuv2" -e ./sketch
+          arduino-cli compile -b "esp8266:esp8266:nodemcuv2" -e './sketch' --output-dir './sketch/build'
       
       # Upload to repository
       - name: Push changes to repo
         run: |
-          mv './sketch/build/**/*.ino.bin' './updater/firmware.bin'
+          ls ./sketch/build
+          mv './sketch/build/*.ino.bin' './updater/firmware.bin'
           cp './sketch/version.txt' './updater/build-version.txt'
           rm -rf './sketch/build'
           git config --global user.name github-actions
