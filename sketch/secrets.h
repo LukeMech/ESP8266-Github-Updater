@@ -16,5 +16,5 @@ const char* password = "";                      // Network password
 const char* host = "github.com";        // Host to check connection, leave as is if using github
 const int httpsPort = 443;              // Host port
 
-const char* updaterVersionCtrlUrl = "https://raw.githubusercontent.com/Bajojajo-xD/ledWallArduinoCode/main/version.txt";  // Link to version.txt
-const char* updaterFirmwareUrl = "https://raw.githubusercontent.com/Bajojajo-xD/ledWallArduinoCode/main/firmware.bin";    // File to firmware.bin
+const char* updaterVersionCtrlUrl = "https://raw.githubusercontent.com/LukeMech/ESP8266-Github-Updater/main/updater/build-version.txt";  // Link to version.txt
+const char* updaterFirmwareUrl = "https://raw.githubusercontent.com/LukeMech/ESP8266-Github-Updater/main/updater/firmware.bin";    // File to firmware.bin
